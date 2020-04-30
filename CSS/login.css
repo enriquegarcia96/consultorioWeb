@@ -1,0 +1,18 @@
+.cuadrado{
+    width: 900px;
+    height: 500px;
+    background-color: #A6DDF4;
+    position: absolute;
+    right: 22%;
+    top: 12%;
+}
+
+
+.cuadrado2{
+    width: 800px;
+    height: 370px;
+    background-color: #FDFDFD;
+    position: absolute;
+    right: 5%;
+    top: 12%;
+}
