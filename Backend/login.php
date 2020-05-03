@@ -1,37 +1,28 @@
 <?php
     require_once '../Conexion/Conexion.php';
-    session_start();
 
-    //if (empty($_POST['TipoUsuario']) and empty($_POST['Contrasena'])){}
-    $TipoUsuario = $_POST['TipoUsuario'];
-    $Contrasena = $_POST['Contrasena'];
+    if (isset($_POST['TipoUsuario']) && isset($_POST['Contrasena'])) {
+        $tipoUsuario = $_POST['TipoUsuario']; 
+        $contrasena = $_POST['Contrasena'];
 
-    //$prepare = Conexion::abriendoConexion()->prepare("select * from usuario where TipoUsuario = ? and Contrasena = ?");
-    $prepare = Conexion::abriendoConexion()->prepare("select * from usuario  where TipoUsuario = '$TipoUsuario' and Contrasena = '$Contrasena' ");
+        $sentencia = Conexion::abriendoConexion()->prepare("select TipoUsuario, Contrasena from usuario where TipoUsuario = ? and Contrasena = ?");
+        
+        $sentencia->bindParam(1,$tipoUsuario,PDO::FETCH_ASSOC);//mando los datos obtenidos 
+        $sentencia->bindParam(2,$contrasena,PDO::FETCH_ASSOC);//desde html 
+        $sentencia->execute();//ejecuto la consulta prepare
+        $row = $sentencia->fetchAll();//la consulta lo convierto en un arreglo asociativo
 
-    //$prepare->bindParam(1,$TipoUsuario);
-    //$prepare->bindParam(2,$Contrasena);
+        //var_dump($row);
+        //si el arreglo que se ejecuto es mayor a 0 , significa que trajo un valor
+        if ($row [0] > 0) {
+            session_start();
+            $_SESSION['TipoUsuario'] = $tipoUsuario;
+            $_SESSION['Contrasena']  = $contrasena;
+            
+            header('Location: ../index2.html');
+        }else{
+            header('Location: ../index.php');
+        }
 
-    //$prepare->executeQuery();
-
-
-    //$prepare->setFetchMode(PDO::FETCH_ASSOC);
-
-
-    $prepare->execute();
-    $prepare->setFetchMode(PDO::FETCH_ASSOC);
-
-
-
-
-    if ($prepare == true) {
-        $_SESSION['TipoUsuario'] = $TipoUsuario;
-        $_SESSION['Contrasena'] = $Contrasena;
-        header('Location: ../index2.html');
-        echo 'SIIIIIIIIIIIIIIIII';
-    }else {
-        echo 'NOOOOOOOOOOOOOOOOOOOO';
-        $error_msg =  "E-Mail oder Passwort war ungültig<br><br>";
     }
-
 ?>
