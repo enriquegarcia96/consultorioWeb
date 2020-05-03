@@ -1,5 +1,35 @@
 <?php
+    session_start();
+    require_once 'Conexion/Conexion.php';
 
+
+
+    if (isset($_POST['TipoUsuario']) && isset($_POST['Contrasena'])){
+        $tipoUsuario = $_POST['TipoUsuario'];
+        $Contrasena = $_POST['Contrasena'];
+
+
+        $sentencia = Conexion::abriendoConexion()->prepare("select * from usuario where TipoUsuario = ? and Contrasena = ?");
+        $sentencia->bindParam('TipoUsuario',$tipoUsuario);
+        $sentencia->bindParam('Contrasena',$Contrasena);
+        $sentencia->execute();
+        //$resul = $sentencia->rowCount();
+        $resultado = $sentencia->execute();
+        var_dump($resultado);
+        //$resultado = $sentencia->fetch();
+        /*
+        if ($sentencia) {
+            $_SESSION['TipoUsuario'] = $tipoUsuario;
+            //$_SESSION['TipoUsuario'] = $_POST['Contrasena'];
+            //$_SESSION['contra'] = $resultado['Contrasena'];
+           // $_SESSION['pass'] = $resultado['TipoUsuario'];
+            header('Location: index2.html');
+
+        }else{
+            header('Location: index.php');
+        }  */
+
+    }
 
 
 
@@ -33,9 +63,10 @@
 						</div>
 						<div class="content">
 							<div class="inner">
-								<h1>Dimension</h1>
-								<p>A fully responsive site template designed by <a href="https://html5up.net">HTML5 UP</a> and released<br />
-								for free under the <a href="https://html5up.net/license">Creative Commons</a> license.</p>
+								<h1>Servicios Juridicos</h1>
+								<h1>UNICAH</h1>
+								<p>La universidad catolica de Honduras otorga a disposicion al pueblo hondureño 
+								servicios juridicos que pueden realizar sus tramites completamente gratis</p>
 							</div>
 						</div>
 						<nav>
@@ -43,21 +74,22 @@
 								<li><a href="#servicio">Servicios</a></li>
 								<li><a href="#work">Work</a></li>
 								<li><a href="#about">About</a></li>
-								<li><a href="#inicio">Inicio De Sesion</a></li>
+								<li><a href="#inicio">Inicio</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 						</nav>
 					</header>
-
+|	
 				<!-- Main -->
 					<div id="main">
 
 						<!-- Intro -->
 							<article id="servicio">
-								<h2 class="major">Servicios Juridicos</h2>
-								<span class="image main"><img src="1.jpeg" alt="" /></span>
-								<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+								<h2 class="major">Servicios Juridicos Gratuitos </h2>
+								<span class="image main"><img src="images/servicios.jpg" alt="" /></span>
+								<p>Le ofrecemos los siguientes servicios legales gratuitos</p>
+								<p>Demanda de Alimentos, Suspension De Patria Potestad, Guarda y Custodia, Reconocimiento De Union De Hecho, Regimen De Comunicacion Y Visitas, Demanda De Pago, Declaratorias De Herencia,
+								Declaracion De Muerte Presunta, Solicitud Ad-Perpetua, Reposicion De Titulo Valor, Demandas Laborales, Solicitud De Dominios Plenos, Tramite Administrativos En la procuradoria Del Trabajo</p>
 							</article>
 
 						<!-- Work -->
@@ -78,7 +110,7 @@
 						<!-- Inicio de sesion -->
 							<article id="inicio">
 								<h2 class="major">Iniciar Sesion</h2>
-								<form method="post" action="Backend/login.php">
+								<form method="post" action="Backend/log">
 									<div class="fields">
 										<div class="field half">
 											<label for="tipoUsuario">Tipo De Usuario</label>
@@ -95,7 +127,7 @@
 									</div>
 									<ul class="actions">
 										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="submit" value="Entrar"/></li>
+										<input type="submit" value="Entrar"/>
 									</ul>
 								</form>
 								<ul class="icons">
